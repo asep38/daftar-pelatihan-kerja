@@ -31,6 +31,10 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
                         Nilai
                     </a>
+                    <a class="nav-link" href="?page=absensi">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
+                        Absensi
+                    </a>
                 </nav>
             </div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages"
