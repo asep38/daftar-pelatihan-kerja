@@ -217,20 +217,10 @@ $result = $conn->query($query);
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Email</th>
-                                <th>No Telpon</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>Email</th>
-                                <th>No Telpon</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
+
                     <?php } ?>
                     <tbody>
                         <?php

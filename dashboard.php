@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-if (!isset($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
+if (!isset ($_SESSION['logged_in']) || $_SESSION['logged_in'] !== true) {
     header("Location: /daftar-pelatihan-kerja/login.php");
     exit();
 }
@@ -25,12 +25,18 @@ if ($_SESSION['role'] !== 'admin') {
 
         <div id="layoutSidenav_content">
             <?php
-            if (isset($_GET['page'])) {
+            if (isset ($_GET['page'])) {
                 $page = $_GET['page'];
                 if ($page == 'peserta') {
                     require "pages/peserta.php";
                 } elseif ($page == 'pelatihan') {
                     require "pages/pelatihan.php";
+                } elseif ($page == 'kejuruan') {
+                    require "pages/kejuruan.php";
+                } elseif ($page == 'nilaipilihpelatihan') {
+                    require "pages/nilai-pilih-pelatihan.php";
+                } elseif ($page == 'nilaipilihpeserta') {
+                    require "pages/nilai-pilih-peserta.php";
                 } else {
                     echo "Halaman tidak ditemukan.";
                 }

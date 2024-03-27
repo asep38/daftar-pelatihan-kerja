@@ -1,17 +1,19 @@
 <?php
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 
-session_start();
-if (isset($_SESSION['success_message'])) {
+if (isset ($_SESSION['success_message'])) {
     echo "<script>alert('" . $_SESSION['success_message'] . "');</script>";
     unset($_SESSION['success_message']);
 }
 
-require_once('./config/koneksi.php');
+require_once ('./config/koneksi.php');
 $query = "SELECT id_pelatihan, nama, deskripsi, tanggal_mulai, tanggal_selesai, tempat FROM pelatihan";
 
-$result  = $conn->query($query);
+$result = $conn->query($query);
 ?>
 
 <style>
@@ -43,30 +45,35 @@ $result  = $conn->query($query);
 
 
 <main>
-    <div class="modal modal-backdrop fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="confirmDeleteModal" tabindex="-1"
+        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Penghapusan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('confirmDeleteModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('confirmDeleteModal')"></button>
                 </div>
                 <div class="modal-body">
                     Apakah Anda yakin ingin menghapus peserta ini?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal('confirmDeleteModal')">Tidak</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                        onclick="closeModal('confirmDeleteModal')">Tidak</button>
                     <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal modal-backdrop fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">Edit Pelatihan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('editModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('editModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
@@ -85,7 +92,8 @@ $result  = $conn->query($query);
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
-                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
+                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="tempat" class="form-label">Tempat</label>
@@ -93,7 +101,8 @@ $result  = $conn->query($query);
                         </div>
                         <div class="mt-4 mb-0">
                             <div class="text-end">
-                                <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Batal</button>
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="closeModal('editModal')">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
@@ -104,12 +113,14 @@ $result  = $conn->query($query);
         </div>
     </div>
 
-    <div class="modal modal-backdrop fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="detailModalLabel">Detail Pelatihan</h5>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="closeModal('detailModal')"></button>
+                    <button type="button" class="btn-close" aria-label="Close"
+                        onclick="closeModal('detailModal')"></button>
                 </div>
                 <div class="modal-body">
                     <p><strong>Nama Pelatihan : </strong><br><span id="detail_nama"></span></p>
@@ -123,12 +134,14 @@ $result  = $conn->query($query);
         </div>
     </div>
 
-    <div class="modal modal-backdrop fade" id="pelatihanModal" tabindex="-1" aria-labelledby="pelatihanModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="pelatihanModal" tabindex="-1" aria-labelledby="pelatihanModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="pelatihanModalLabel">Detail Peserta</h5>
-                    <button type="button" class="btn-close" aria-label="Close" onclick="closeModal('pelatihanModal')"></button>
+                    <button type="button" class="btn-close" aria-label="Close"
+                        onclick="closeModal('pelatihanModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form action="./functions/create_pelatihan_function.php" method="POST">
@@ -146,14 +159,16 @@ $result  = $conn->query($query);
                         </div>
                         <div class="mb-3">
                             <label for="tanggal_selesai" class="form-label">Tanggal Selesai</label>
-                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai" required>
+                            <input type="date" class="form-control" id="tanggal_selesai" name="tanggal_selesai"
+                                required>
                         </div>
                         <div class="mb-3">
                             <label for="tempat" class="form-label">Tempat</label>
                             <input type="text" class="form-control" id="tempat" name="tempat" required>
                         </div>
                         <div class="text-end">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal('pelatihanModal')">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                onclick="closeModal('pelatihanModal')">Close</button>
                             <button type="submit" class="btn btn-success">Tambah Data</button>
                         </div>
                     </form>
@@ -171,7 +186,9 @@ $result  = $conn->query($query);
         </ol>
         <div class="card mb-4">
             <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat et laudantium explicabo corporis deserunt possimus vel minima molestiae porro nihil, officia ut numquam, vitae tenetur error facilis doloribus.
+                Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugiat et laudantium explicabo corporis
+                deserunt possimus vel minima molestiae porro nihil, officia ut numquam, vitae tenetur error facilis
+                doloribus.
             </div>
         </div>
         <div class="mb-4">
@@ -210,16 +227,25 @@ $result  = $conn->query($query);
                         <?php
                         $i = 1;
                         if ($result->num_rows > 0) {
-                            while ($row =
+                            while (
+                                $row =
                                 $result->fetch_assoc()
                             ) {
 
-                        ?>
+                                ?>
                                 <tr>
-                                    <td><?php echo $i++; ?>.</td>
-                                    <td><?php echo $row["nama"]; ?></td>
-                                    <td><?php echo $row["tanggal_mulai"]; ?></td>
-                                    <td><?php echo $row["tanggal_selesai"]; ?></td>
+                                    <td>
+                                        <?php echo $i++; ?>.
+                                    </td>
+                                    <td>
+                                        <?php echo $row["nama"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["tanggal_mulai"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["tanggal_selesai"]; ?>
+                                    </td>
                                     <td>
                                         <a class="pointer me-2" onclick="showDetail(<?php echo $row['id_pelatihan']; ?>)">
                                             <span class="badge bg-primary p-2">
@@ -231,21 +257,22 @@ $result  = $conn->query($query);
                                                 <i class="fas fa-edit"></i> Edit
                                             </span>
                                         </a>
-                                        <a class="pointer me-2" onclick="showModalDelete(<?php echo $row['id_pelatihan']; ?>, '<?php echo $row['nama']; ?>')">
+                                        <a class="pointer me-2"
+                                            onclick="showModalDelete(<?php echo $row['id_pelatihan']; ?>, '<?php echo $row['nama']; ?>')">
                                             <span class="badge bg-danger p-2">
                                                 <i class="fas fa-trash-alt"></i> Delete
                                             </span>
                                         </a>
                                     </td>
                                 </tr>
-                            <?php
+                                <?php
                             }
                         } else {
                             ?>
                             <tr>
                                 <td colspan='5'>No data found</td>
                             </tr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
@@ -259,7 +286,7 @@ $result  = $conn->query($query);
     function showEditModal(idPelatihan) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/detail_pelatihan_function.php?id=' + idPelatihan, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const data = JSON.parse(xhr.responseText);
                 document.getElementById('id_pelatihan').value = data.id_pelatihan;
@@ -275,12 +302,12 @@ $result  = $conn->query($query);
         xhr.send();
     }
 
-    document.getElementById('editForm').addEventListener('submit', function(event) {
+    document.getElementById('editForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(this);
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './functions/update_pelatihan_function.php', true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 alert(xhr.responseText);
                 const modal = document.getElementById('editModal');
@@ -301,7 +328,7 @@ $result  = $conn->query($query);
 
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/detail_pelatihan_function.php?id=' + idPelatihan, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const data = JSON.parse(xhr.responseText);
                 nama.textContent = data.nama;
@@ -330,17 +357,17 @@ $result  = $conn->query($query);
     function showModal(idModal) {
         document.getElementById(idModal).classList.add("fade");
         document.getElementById(idModal).style.display = "block";
-        setTimeout(function() {
+        setTimeout(function () {
             document.getElementById(idModal).classList.add("show");
             document.body.classList.add("modal-open");
         }, 100);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const modalBackdrops = document.querySelectorAll('.modal-backdrop');
 
-        modalBackdrops.forEach(function(modalBackdrop) {
-            modalBackdrop.addEventListener('click', function(event) {
+        modalBackdrops.forEach(function (modalBackdrop) {
+            modalBackdrop.addEventListener('click', function (event) {
                 if (event.target === modalBackdrop) {
                     const modal = modalBackdrop.closest('.modal')
                     const modalId = modal.getAttribute('id');

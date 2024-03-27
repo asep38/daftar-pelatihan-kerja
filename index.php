@@ -40,7 +40,7 @@ session_start();
             </button>
             <div class="collapse navbar-collapse" id="navbarResponsive">
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
-                    <li class="nav-item"><a class="nav-link me-lg-3" href="#features">Daftar</a></li>
+                    <li class="nav-item"><a class="nav-link me-lg-3" href="pages/pendaftaran.php">Daftar</a></li>
                 </ul>
                 <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal"
                     data-bs-target="#feedbackModal">
@@ -63,7 +63,7 @@ session_start();
                         <p class="lead fw-normal text-muted mb-5">Program Pengembangan Keterampilan Unggulan Dan
                             Terpercaya</p>
                         <div class="d-flex flex-column flex-lg-row align-items-center">
-                            <a href="#!"><span
+                            <a href="pages/pendaftaran.php"><span
                                     class="btn btn-primary btn-lg rounded-pill w-6 mb-3 mb-lg-0 ">Daftar</span></a>
                         </div>
                     </div>
