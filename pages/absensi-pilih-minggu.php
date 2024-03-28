@@ -2,6 +2,8 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
+$pelatihan = $_GET['id_pelatihan'];
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -72,51 +74,61 @@ $result = $conn->query($query);
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>ID</th>
-                                <th>Kelas</th>
+                                <th>Minggu</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-
                     <?php } ?>
                     <tbody>
+
                         <?php
                         $i = 1;
-                        if ($result->num_rows > 0) {
-                            while ($row = $result->fetch_assoc()) {
-                                ?>
-                                <tr>
-                                    <td>
-                                        <?php echo $i++; ?>.
-                                    </td>
-                                    <td>
-                                        <?php echo $row["id_pelatihan"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row["nama_jurusan"]; ?>
-                                    </td>
+                        $minggu = array(
+                            "Minggu 1",
+                            "Minggu 2",
+                            "Minggu 3",
+                            "Minggu 4",
+                            "Minggu 5",
+                            "Minggu 6",
+                            "Minggu 7",
+                            "Minggu 8",
+                            "Minggu 9",
+                            "Minggu 10",
+                            "Minggu 11",
+                            "Minggu 12",
+                            "Minggu 13",
+                            "Minggu 14"
+                        );
 
-                                    <td>
-                                        <a class="pointer me-2"
-                                            href="?page=absensipilihminggu&id_pelatihan=<?php echo $row['id_pelatihan']; ?>">
-                                            <span class="badge bg-primary p-2">
-                                                <i class="fas fa-info-circle"></i> Pilih
-                                            </span>
-                                        </a>
-                                    </td>
-                                </tr>
-                                <?php
-                            }
-                        } else {
+                        foreach ($minggu as $index => $item) {
+                            $week_number = $index + 1; // Nomor minggu dimulai dari 1
+                        
                             ?>
                             <tr>
-                                <td colspan='5'>No data found</td>
+                                <td>
+                                    <?php echo $i++; ?>.
+                                </td>
+                                <td>
+                                    <?php echo $item; ?>
+                                </td>
+                                <td>
+                                    <a class="pointer me-2"
+                                        href="?page=absensiinput&id_pelatihan=<?php echo $pelatihan; ?>&minggu=<?php echo $week_number; ?>">
+                                        <span class="badge bg-primary p-2">
+                                            <i class="fas fa-info-circle"></i> Pilih
+                                        </span>
+                                    </a>
+                                </td>
                             </tr>
+
                             <?php
                         }
+
                         ?>
+
                     </tbody>
                 </table>
+
             </div>
         </div>
 

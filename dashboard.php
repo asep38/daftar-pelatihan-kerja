@@ -39,6 +39,12 @@ if ($_SESSION['role'] !== 'admin') {
                     require "pages/nilai-pilih-peserta.php";
                 } elseif ($page == 'absensi') {
                     require "pages/absensi.php";
+                } elseif ($page == 'absensidetail') {
+                    require "pages/absensi-detail.php";
+                } elseif ($page == 'absensipilihminggu') {
+                    require "pages/absensi-pilih-minggu.php";
+                } elseif ($page == 'absensiinput') {
+                    require "pages/absensi-input.php";
                 } else {
                     echo "Halaman tidak ditemukan.";
                 }

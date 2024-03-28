@@ -2,6 +2,9 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
+$idPelatihan = $_GET['id_pelatihan'];
+
+
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
@@ -12,9 +15,7 @@ if (isset($_SESSION['success_message'])) {
 }
 
 require_once ('./config/koneksi.php');
-$query = "SELECT pelatihan.id_pelatihan, jurusan.nama_jurusan, pelatihan.tanggal_mulai, pelatihan.tanggal_selesai
-FROM pelatihan
-JOIN jurusan ON pelatihan.id_jurusan = jurusan.id_jurusan
+$query = "SELECT * FROM peserta WHERE id_jurusan = $idPelatihan
 ";
 
 $result = $conn->query($query);
@@ -72,8 +73,7 @@ $result = $conn->query($query);
                         <thead>
                             <tr>
                                 <th>No</th>
-                                <th>ID</th>
-                                <th>Kelas</th>
+                                <th>Nama</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -90,19 +90,16 @@ $result = $conn->query($query);
                                         <?php echo $i++; ?>.
                                     </td>
                                     <td>
-                                        <?php echo $row["id_pelatihan"]; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $row["nama_jurusan"]; ?>
+                                        <?php echo $row["nama"]; ?>
                                     </td>
 
                                     <td>
-                                        <a class="pointer me-2"
-                                            href="?page=absensipilihminggu&id_pelatihan=<?php echo $row['id_pelatihan']; ?>">
+                                        <a class="pointer me-2" onclick="showNilaiModal(<?php echo $row['id_peserta']; ?>)">
                                             <span class="badge bg-primary p-2">
-                                                <i class="fas fa-info-circle"></i> Pilih
+                                                <i class="fas fa-info-circle"></i> Nilai
                                             </span>
                                         </a>
+
                                     </td>
                                 </tr>
                                 <?php
@@ -117,6 +114,7 @@ $result = $conn->query($query);
                         ?>
                     </tbody>
                 </table>
+
             </div>
         </div>
 
