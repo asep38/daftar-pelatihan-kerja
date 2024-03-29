@@ -74,7 +74,7 @@ $result = $conn->query($query);
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
-                                <th>Action</th>
+                                <th>Keterangan</th>
                             </tr>
                         </thead>
 
@@ -94,13 +94,24 @@ $result = $conn->query($query);
                                     </td>
 
                                     <td>
-                                        <a class="pointer me-2" onclick="showNilaiModal(<?php echo $row['id_peserta']; ?>)">
-                                            <span class="badge bg-primary p-2">
-                                                <i class="fas fa-info-circle"></i> Nilai
-                                            </span>
-                                        </a>
+                                        <label class="btn btn-success"><input type="radio"
+                                                name="<?= 'ket' . $data["id_peserta"]; ?>"
+                                                id="<?php echo 'opsi1' . $row["id_peserta"]; ?>" value="hadir">Hadir</label>
 
+                                        <label class="btn btn-danger"><input type="radio"
+                                                name="<?= 'ket' . $data["id_peserta"]; ?>"
+                                                id="<?php echo 'opsi1' . $row["id_peserta"]; ?>" value="absen">Absen</label>
+
+                                        <label class="btn btn-warning"><input type="radio"
+                                                name="<?= 'ket' . $data["id_peserta"]; ?>"
+                                                id="<?php echo 'opsi1' . $row["id_peserta"]; ?>" value="sakit">Sakit</label>
+
+                                        <label class="btn btn-primary"><input type="radio"
+                                                name="<?= 'ket' . $data["id_peserta"]; ?>"
+                                                id="<?php echo 'opsi1' . $row["id_peserta"]; ?>" value="izin">Izin</label>
                                     </td>
+
+
                                 </tr>
                                 <?php
                             }
