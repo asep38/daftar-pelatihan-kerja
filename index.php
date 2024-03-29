@@ -42,13 +42,12 @@ session_start();
                 <ul class="navbar-nav ms-auto me-4 my-3 my-lg-0">
                     <li class="nav-item"><a class="nav-link me-lg-3" href="pages/pendaftaran.php">Daftar</a></li>
                 </ul>
-                <button class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0" data-bs-toggle="modal"
-                    data-bs-target="#feedbackModal">
+                <a href="login.php" class="btn btn-primary rounded-pill px-3 mb-2 mb-lg-0">
                     <span class="d-flex align-items-center">
                         <!-- <i class="bi-chat-text-fill me-2"></i> -->
                         <span class="small">Login</span>
                     </span>
-                </button>
+                </a>
             </div>
         </div>
     </nav>
