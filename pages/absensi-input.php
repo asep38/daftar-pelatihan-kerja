@@ -58,8 +58,8 @@ $result = $conn->query($query);
             <li class="breadcrumb-item active">Tables</li>
         </ol>
         <div class="card mb-4">
-            <div class="card-body">
-                Pilih Pelatihan dan jadwal
+            <div class="card-header">
+                <a href="#" class="btn btn-primary">Rekap Absen</a>
             </div>
         </div>
         <div class="card mb-4">
@@ -125,7 +125,7 @@ $result = $conn->query($query);
                         ?>
                     </tbody>
                 </table>
-
+                <button class="btn btn-primary">Simpan</button>
             </div>
         </div>
 

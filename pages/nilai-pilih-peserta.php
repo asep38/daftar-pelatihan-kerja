@@ -13,11 +13,16 @@ if (isset($_SESSION['success_message'])) {
 
 $idPelatihan = $_GET['id_pelatihan'];
 
-require_once('./config/koneksi.php');
-$query = "SELECT * FROM peserta WHERE id_jurusan = $idPelatihan;
+require_once ('./config/koneksi.php');
+$query = "SELECT peserta.*, nilai.* 
+          FROM peserta 
+          INNER JOIN nilai ON peserta.id_peserta = nilai.id_peserta 
+          WHERE peserta.id_jurusan = $idPelatihan
 ";
+// $queryNilai = "SELECT * FROM nilai";
 
 $result = $conn->query($query);
+// $resultNilai = $conn->query($queryNilai);
 ?>
 
 <style>
@@ -50,12 +55,14 @@ $result = $conn->query($query);
 <main>
 
 
-    <div class="modal modal-backdrop fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">Edit Peserta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('editModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('editModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
@@ -63,13 +70,15 @@ $result = $conn->query($query);
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="nama" name="nama" type="text" placeholder="Nama" required />
+                                    <input class="form-control" id="nama" name="nama" type="text" placeholder="Nama"
+                                        required />
                                     <label for="nama">Nama</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" required />
+                                    <input class="form-control" id="email" name="email" type="email"
+                                        placeholder="name@example.com" required />
                                     <label for="email">Email address</label>
                                 </div>
                             </div>
@@ -77,7 +86,8 @@ $result = $conn->query($query);
 
                         <div class="mt-4 mb-0">
                             <div class="text-end">
-                                <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Batal</button>
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="closeModal('editModal')">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
@@ -88,12 +98,14 @@ $result = $conn->query($query);
         </div>
     </div>
 
-    <div class="modal modal-backdrop fade" id="nilaiModal" tabindex="-1" aria-labelledby="nilaiModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="nilaiModal" tabindex="-1" aria-labelledby="nilaiModalLabel"
+        aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="nilaiModalLabel">tambah nilai</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('nilaiModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
+                        onclick="closeModal('nilaiModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form id="tambahForm" onsubmit="simpanNilai(); return false;">
@@ -102,13 +114,15 @@ $result = $conn->query($query);
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="nama-peserta" name="nama-peserta" type="text" placeholder="Nama" disabled required />
+                                    <input class="form-control" id="nama-peserta" name="nama-peserta" type="text"
+                                        placeholder="Nama" disabled required />
                                     <label for="nama-peserta">Nama</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input class="form-control" id="nilai-peserta" name="nilai-peserta" type="number" placeholder="nilai" required />
+                                    <input class="form-control" id="nilai-peserta" name="nilai-peserta" type="number"
+                                        placeholder="nilai" required />
                                     <label for="nilai-peserta">nilai</label>
                                 </div>
                             </div>
@@ -116,7 +130,8 @@ $result = $conn->query($query);
 
                         <div class="mt-4 mb-0">
                             <div class="text-end">
-                                <button type="button" class="btn btn-secondary" onclick="closeModal('nilaiModal')">Batal</button>
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="closeModal('nilaiModal')">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
@@ -136,10 +151,8 @@ $result = $conn->query($query);
             <li class="breadcrumb-item active">Tables</li>
         </ol>
         <div class="card mb-4">
-            <div class="card-body">
-                Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facere assumenda in corrupti repudiandae
-                delectus magnam soluta natus veniam aliquam id sequi modi aspernatur libero officiis illo eveniet,
-                quidem a.
+            <div class="card-header">
+                <a href="#" class="btn btn-primary">Rekap Nilai</a>
             </div>
         </div>
         <div class="card mb-4">
@@ -154,6 +167,7 @@ $result = $conn->query($query);
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>Nilai</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
@@ -164,13 +178,16 @@ $result = $conn->query($query);
                         $i = 1;
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                        ?>
+                                ?>
                                 <tr>
                                     <td>
                                         <?php echo $i++; ?>.
                                     </td>
                                     <td>
                                         <?php echo $row["nama"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["nilai"]; ?>
                                     </td>
 
                                     <td>
@@ -186,18 +203,19 @@ $result = $conn->query($query);
                                         </a>
                                     </td>
                                 </tr>
-                            <?php
+                                <?php
                             }
                         } else {
                             ?>
                             <tr>
                                 <td colspan='5'>No data found</td>
                             </tr>
-                        <?php
+                            <?php
                         }
                         ?>
                     </tbody>
                 </table>
+
             </div>
         </div>
     </div>
@@ -206,7 +224,7 @@ $result = $conn->query($query);
     function showNilaiModal(idPeserta) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/detail_peserta_function.php?id=' + idPeserta, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const data = JSON.parse(xhr.responseText);
                 // console.log(data)
@@ -222,7 +240,7 @@ $result = $conn->query($query);
         const formData = new FormData(document.getElementById('tambahForm'));
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './functions/nilai_function.php', true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 alert(xhr.responseText);
                 const modal = document.getElementById('nilaiModal');
@@ -239,7 +257,7 @@ $result = $conn->query($query);
     function showEditModal(idPeserta) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/detail_peserta_function.php?id=' + idPeserta, true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const data = JSON.parse(xhr.responseText);
                 document.getElementById('id_peserta').value = data.id_peserta;
@@ -259,13 +277,13 @@ $result = $conn->query($query);
         xhr.send();
     }
 
-    document.getElementById('editForm').addEventListener('submit', function(event) {
+    document.getElementById('editForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(this);
         console.log(formData)
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './functions/update_peserta_function.php', true);
-        xhr.onreadystatechange = function() {
+        xhr.onreadystatechange = function () {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 alert(xhr.responseText);
                 const modal = document.getElementById('editModal');
@@ -280,17 +298,17 @@ $result = $conn->query($query);
     function showModal(idModal) {
         document.getElementById(idModal).classList.add("fade");
         document.getElementById(idModal).style.display = "block";
-        setTimeout(function() {
+        setTimeout(function () {
             document.getElementById(idModal).classList.add("show");
             document.body.classList.add("modal-open");
         }, 100);
     }
 
-    document.addEventListener('DOMContentLoaded', function() {
+    document.addEventListener('DOMContentLoaded', function () {
         const modalBackdrops = document.querySelectorAll('.modal-backdrop');
 
-        modalBackdrops.forEach(function(modalBackdrop) {
-            modalBackdrop.addEventListener('click', function(event) {
+        modalBackdrops.forEach(function (modalBackdrop) {
+            modalBackdrop.addEventListener('click', function (event) {
                 if (event.target === modalBackdrop) {
                     const modal = modalBackdrop.closest('.modal')
                     const modalId = modal.getAttribute('id');

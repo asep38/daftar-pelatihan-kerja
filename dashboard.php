@@ -31,6 +31,8 @@ if ($_SESSION['role'] !== 'admin') {
                     require "pages/peserta.php";
                 } elseif ($page == 'pelatihan') {
                     require "pages/pelatihan.php";
+                } elseif ($page == 'pendaftaran') {
+                    require "pages/pendaftaran.php";
                 } elseif ($page == 'kejuruan') {
                     require "pages/kejuruan.php";
                 } elseif ($page == 'nilaipilihpelatihan') {
