@@ -11,7 +11,7 @@ if (isset($_SESSION['success_message'])) {
     unset($_SESSION['success_message']);
 }
 
-require_once ('./config/koneksi.php');
+require_once('./config/koneksi.php');
 $query = "SELECT pelatihan.id_pelatihan, jurusan.nama_jurusan, pelatihan.tanggal_mulai, pelatihan.tanggal_selesai
 FROM pelatihan
 JOIN jurusan ON pelatihan.id_jurusan = jurusan.id_jurusan
@@ -84,7 +84,7 @@ $result = $conn->query($query);
                         $i = 1;
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                ?>
+                        ?>
                                 <tr>
                                     <td>
                                         <?php echo $i++; ?>.
@@ -97,22 +97,21 @@ $result = $conn->query($query);
                                     </td>
 
                                     <td>
-                                        <a class="pointer me-2"
-                                            href="?page=absensipilihminggu&id_pelatihan=<?php echo $row['id_pelatihan']; ?>">
+                                        <a class="pointer me-2" href="?page=absensipilihminggu&id_pelatihan=<?php echo $row['id_pelatihan']; ?>">
                                             <span class="badge bg-primary p-2">
                                                 <i class="fas fa-info-circle"></i> Pilih
                                             </span>
                                         </a>
                                     </td>
                                 </tr>
-                                <?php
+                            <?php
                             }
                         } else {
                             ?>
                             <tr>
                                 <td colspan='5'>No data found</td>
                             </tr>
-                            <?php
+                        <?php
                         }
                         ?>
                     </tbody>

@@ -13,7 +13,7 @@ if (isset($_SESSION['success_message'])) {
     unset($_SESSION['success_message']);
 }
 
-require_once ('./config/koneksi.php');
+require_once('./config/koneksi.php');
 $query = "SELECT pelatihan.id_pelatihan, jurusan.nama_jurusan, pelatihan.tanggal_mulai, pelatihan.tanggal_selesai
 FROM pelatihan
 JOIN jurusan ON pelatihan.id_jurusan = jurusan.id_jurusan
@@ -102,8 +102,8 @@ $result = $conn->query($query);
 
                         foreach ($minggu as $index => $item) {
                             $week_number = $index + 1; // Nomor minggu dimulai dari 1
-                        
-                            ?>
+
+                        ?>
                             <tr>
                                 <td>
                                     <?php echo $i++; ?>.
@@ -112,8 +112,7 @@ $result = $conn->query($query);
                                     <?php echo $item; ?>
                                 </td>
                                 <td>
-                                    <a class="pointer me-2"
-                                        href="?page=absensiinput&id_pelatihan=<?php echo $pelatihan; ?>&minggu=<?php echo $week_number; ?>">
+                                    <a class="pointer me-2" href="?page=absensiinput&id_pelatihan=<?php echo $pelatihan; ?>&minggu=<?php echo $week_number; ?>">
                                         <span class="badge bg-primary p-2">
                                             <i class="fas fa-info-circle"></i> Pilih
                                         </span>
@@ -121,7 +120,7 @@ $result = $conn->query($query);
                                 </td>
                             </tr>
 
-                            <?php
+                        <?php
                         }
 
                         ?>
