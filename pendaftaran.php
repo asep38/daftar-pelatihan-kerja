@@ -99,6 +99,32 @@
                                                     <label for="nik">NIK</label>
                                                 </div>
                                             </div>
+                                            <div class="col-md-6">
+                                                <div class="form-floating mb-3 mb-md-0">
+                                                    <select class="form-select" id="idjurusan" name="idjurusan">
+                                                        <?php
+                                                        require_once ('./config/koneksi.php');
+                                                        $i = 1;
+                                                        $ambilsemuadata = mysqli_query($conn, "SELECT * FROM jurusan");
+                                                        while ($fetcharray = mysqli_fetch_array($ambilsemuadata)) {
+                                                            $namajurusan = $fetcharray['nama_jurusan'];
+                                                            $idjurusan = $fetcharray['id_jurusan'];
+
+                                                            ?>
+
+                                                            <option value="<?= $idjurusan; ?>">
+                                                                <?= $i++; ?>
+                                                                <?= $namajurusan; ?>
+                                                            </option>
+
+                                                            <?php
+                                                        }
+                                                        ?>
+
+                                                    </select>
+                                                    <label for="idjurusan">Jurusan</label>
+                                                </div>
+                                            </div>
 
                                         </div>
                                         <div class="mt-4 mb-0">
@@ -107,9 +133,9 @@
                                         </div>
                                     </form>
                                 </div>
-                                <div class="card-footer text-center py-3">
+                                <!-- <div class="card-footer text-center py-3">
                                     <div class="small"><a href="login.php">Have an account? Go to login</a></div>
-                                </div>
+                                </div> -->
                             </div>
                         </div>
                     </div>

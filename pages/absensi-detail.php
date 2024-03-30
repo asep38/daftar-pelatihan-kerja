@@ -52,7 +52,7 @@ $result = $conn->query($query);
 
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Daftar Peserta</h1>
+        <h1 class="mt-4">Daftar Minggu</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
             <li class="breadcrumb-item active">Tables</li>
@@ -65,7 +65,7 @@ $result = $conn->query($query);
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Data Table Peserta
+                Data Tabel Minggu
             </div>
             <div class="card-body">
                 <form role="form" action="simpanabsensi.php?id=<?php echo $_GET['kelas']; ?>" method="post"

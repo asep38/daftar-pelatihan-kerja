@@ -5,13 +5,15 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset ($_SESSION['success_message'])) {
+if (isset($_SESSION['success_message'])) {
     echo "<script>alert('" . $_SESSION['success_message'] . "');</script>";
     unset($_SESSION['success_message']);
 }
 
 require_once ('./config/koneksi.php');
-$query = "SELECT id_pelatihan, nama, deskripsi, tanggal_mulai, tanggal_selesai, tempat FROM pelatihan";
+$query = "SELECT p.id_pelatihan, p.deskripsi, p.tanggal_mulai, p.tanggal_selesai, p.tempat, j.nama_jurusan 
+          FROM pelatihan p 
+          INNER JOIN jurusan j ON p.id_jurusan = j.id_jurusan";
 
 $result = $conn->query($query);
 ?>
@@ -147,7 +149,27 @@ $result = $conn->query($query);
                     <form action="./functions/create_pelatihan_function.php" method="POST">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Pelatihan</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required>
+                            <select class="form-select" id="idjurusan" name="idjurusan">
+                                <?php
+                                require_once ('./config/koneksi.php');
+                                $i = 1;
+                                $ambilsemuadata = mysqli_query($conn, "SELECT * FROM jurusan");
+                                while ($fetcharray = mysqli_fetch_array($ambilsemuadata)) {
+                                    $namajurusan = $fetcharray['nama_jurusan'];
+                                    $idjurusan = $fetcharray['id_jurusan'];
+
+                                    ?>
+
+                                    <option value="<?= $idjurusan; ?>">
+                                        <?= $i++; ?>
+                                        <?= $namajurusan; ?>
+                                    </option>
+
+                                    <?php
+                                }
+                                ?>
+
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
@@ -238,7 +260,7 @@ $result = $conn->query($query);
                                         <?php echo $i++; ?>.
                                     </td>
                                     <td>
-                                        <?php echo $row["nama"]; ?>
+                                        <?php echo $row["nama_jurusan"]; ?>
                                     </td>
                                     <td>
                                         <?php echo $row["tanggal_mulai"]; ?>
@@ -258,7 +280,7 @@ $result = $conn->query($query);
                                             </span>
                                         </a>
                                         <a class="pointer me-2"
-                                            onclick="showModalDelete(<?php echo $row['id_pelatihan']; ?>, '<?php echo $row['nama']; ?>')">
+                                            onclick="showModalDelete(<?php echo $row['id_pelatihan']; ?>, '<?php echo $row['nama_jurusan']; ?>')">
                                             <span class="badge bg-danger p-2">
                                                 <i class="fas fa-trash-alt"></i> Delete
                                             </span>

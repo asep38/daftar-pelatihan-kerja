@@ -2,7 +2,7 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
-require_once('../config/koneksi.php');
+require_once ('../config/koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $nama = $_POST["nama"];
@@ -15,10 +15,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tgl_lahir = $_POST["tgl_lahir"];
     $tempat_lahir = $_POST["tempat_lahir"];
     $nik = $_POST["nik"];
+    $idjurusan = $_POST["idjurusan"];
 
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-    $sql = "INSERT INTO peserta (nama, email, password, no_telpon, alamat, jenis_kelamin, agama, tgl_lahir, tempat_lahir, nik, role) VALUES ('$nama', '$email', '$hashed_password', '$no_telpon', '$alamat', '$jenis_kelamin', '$agama', '$tgl_lahir', '$tempat_lahir', '$nik', 'peserta')";
+    $sql = "INSERT INTO peserta (`nik`, `id_jurusan`, `nama`, `email`, `alamat`, `telepon`, `agama`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`) VALUES 
+                                ('$nik', '$idjurusan', '$nama', '$email', '$alamat', '$no_telpon', '$agama', '$tempat_lahir', '$tgl_lahir', '$jenis_kelamin')";
 
     if ($conn->query($sql) === TRUE) {
         setcookie('registration_success', 'true', time() + 300, '/');
