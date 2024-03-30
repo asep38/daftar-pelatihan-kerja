@@ -148,7 +148,7 @@ $result = $conn->query($query);
                 <div class="modal-body">
                     <form action="./functions/create_pelatihan_function.php" method="POST">
                         <div class="mb-3">
-                            <label for="nama" class="form-label">Nama Pelatihan</label>
+                            <label for="idjurusan" class="form-label">Nama Pelatihan</label>
                             <select class="form-select" id="idjurusan" name="idjurusan">
                                 <?php
                                 require_once ('./config/koneksi.php');
