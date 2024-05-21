@@ -6,13 +6,13 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset ($_SESSION['success_message'])) {
+if (isset($_SESSION['success_message'])) {
     echo "<script>alert('" . $_SESSION['success_message'] . "');</script>";
     unset($_SESSION['success_message']);
 }
 
 require_once ('./config/koneksi.php');
-$query = "SELECT id_peserta, nama, email, alamat, telepon FROM peserta";
+$query = "SELECT * FROM peserta";
 
 $result = $conn->query($query);
 ?>
@@ -198,6 +198,7 @@ $result = $conn->query($query);
             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
             <li class="breadcrumb-item active">Tables</li>
         </ol>
+
         <div class="card mb-4">
             <div class="card-body">
                 Lorem ipsum dolor sit amet consectetur adipisicing elit. Hic facere assumenda in corrupti repudiandae
@@ -205,6 +206,9 @@ $result = $conn->query($query);
                 quidem a.
             </div>
         </div>
+        <a class="btn btn-success mb-4" href="?page=cetakpeserta">
+            Cetak Peserta
+        </a>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
@@ -217,6 +221,7 @@ $result = $conn->query($query);
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>NIS</th>
                                 <th>Email</th>
                                 <th>No Telpon</th>
                                 <th>Action</th>
@@ -226,6 +231,7 @@ $result = $conn->query($query);
                             <tr>
                                 <th>No</th>
                                 <th>Nama</th>
+                                <th>NIS</th>
                                 <th>Email</th>
                                 <th>No Telpon</th>
                                 <th>Action</th>
@@ -244,6 +250,9 @@ $result = $conn->query($query);
                                     </td>
                                     <td>
                                         <?php echo $row["nama"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["nis"]; ?>
                                     </td>
                                     <td>
                                         <?php echo $row["email"]; ?>

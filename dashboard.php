@@ -41,7 +41,6 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                     require "pages/peserta.php";
                 } elseif ($page == 'pelatihan') {
                     require "pages/pelatihan.php";
-
                 } elseif ($page == 'kejuruan') {
                     require "pages/kejuruan.php";
                 } elseif ($page == 'nilaipilihpelatihan') {
@@ -56,6 +55,10 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                     require "pages/absensi-pilih-minggu.php";
                 } elseif ($page == 'absensiinput') {
                     require "pages/absensi-input.php";
+                } elseif ($page == 'cetakpeserta') {
+                    require "pages/cetak-peserta.php";
+                } elseif ($page == 'rekapnilai') {
+                    require "pages/rekap-nilai.php";
                 } else {
                     echo "Halaman tidak ditemukan.";
                 }
@@ -65,7 +68,7 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
             ?>
 
             <main>
-                <div class="container-fluid px-4">
+                <!-- <div class="container-fluid px-4">
                     <h1 class="mt-4">Dashboard</h1>
                     <ol class="breadcrumb mb-4">
                         <li class="breadcrumb-item active">Dashboard</li>
@@ -75,8 +78,7 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                             <div class="card bg-primary text-white mb-4">
                                 <div class="card-body">Jumlah Jurusan</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <!-- data -->
-                                    <?php echo $jumlah_jurusan; ?>
+                                    <? php// echo $jumlah_jurusan; ?>
                                 </div>
                             </div>
                         </div>
@@ -84,14 +86,12 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                             <div class="card bg-warning text-white mb-4">
                                 <div class="card-body">Jumlah Peserta</div>
                                 <div class="card-footer d-flex align-items-center justify-content-between">
-                                    <!--data -->
-                                    <?php echo $jumlah_peserta; ?>
+                                    <? php// echo $jumlah_peserta; ?>
                                 </div>
                             </div>
                         </div>
-
                     </div>
-                </div>
+                </div> -->
             </main>
 
             <?php require "includes/footer.php"; ?>
