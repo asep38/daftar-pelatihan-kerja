@@ -70,7 +70,7 @@ session_start();
                 <div class="col-lg-6">
                     <!-- Masthead device mockup feature-->
                     <div class="mb-5 mb-lg-0 text-center text-lg-start">
-                        <img class="img-fluid h-2 w-2" src="assets/img/pembukaan-pelatihan.jpg" alt="">
+                        <img class="img-fluid h-2 w-2" src="assets/img/header-image.jpeg" alt="">
                     </div>
                 </div>
             </div>
