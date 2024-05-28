@@ -1,10 +1,15 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
+// error_reporting(E_ALL);
+// ini_set('display_errors', 1);
 
 require_once('../config/koneksi.php');
 
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $nis = "";
+    $kejuruan = "";
+    $sifat = "";
+    $tingkat_pelatihan = "";
     $nama = $_POST["nama"];
     $email = $_POST["email"];
     $no_telpon = $_POST["no_telpon"];
@@ -18,40 +23,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $provinsi = $_POST["provinsi"];
     $kab_kota = $_POST["kab_kota"];
     $pendidikan = $_POST["pendidikan"];
-    $tingkat_pelatihan = $_POST["tingkat_pelatihan"];
-    $sifat = $_POST["sifat"];
-    $kejuruan = $_POST["kejuruan"];
 
-    $kode_kab = '052';
+    $sql = "INSERT INTO peserta (nis, kejuruan, sifat, tingkat_pelatihan, nik, id_jurusan, nama, email, alamat, telepon, agama, tempat_lahir, tgl_lahir, jenis_kelamin, provinsi, `kab/kota`, pendidikan) 
+            VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
 
-    $tahun = date("Y");
+    if ($stmt = $conn->prepare($sql)) {
+        $stmt->bind_param("sssssisssssssssss", $nis, $kejuruan, $sifat, $tingkat_pelatihan, $nik, $idjurusan, $nama, $email, $alamat, $no_telpon, $agama, $tempat_lahir, $tgl_lahir, $jenis_kelamin, $provinsi, $kab_kota, $pendidikan);
 
-    $query_urut = "SELECT COUNT(*) AS jumlah FROM peserta WHERE id_jurusan = ?";
-    $stmt_urut = $conn->prepare($query_urut);
-    $stmt_urut->bind_param("i", $idjurusan);
-    $stmt_urut->execute();
-    $result_urut = $stmt_urut->get_result();
-    $row_urut = $result_urut->fetch_assoc();
-    $nomor_urut = str_pad($row_urut['jumlah'] + 1, 4, '0', STR_PAD_LEFT);
+        if ($stmt->execute()) {
+            setcookie('registration_success', 'true', time() + 300, '/');
+            header("Location: /daftar-pelatihan-kerja/login.php");
+            exit();
+        } else {
+            echo "Error: " . $stmt->error;
+        }
 
-    $nis = $nomor_urut . $kode_kab . $tingkat_pelatihan . $kejuruan . $sifat . $tahun;
-
-    $stmt_urut->close();
-
-    $sql = "INSERT INTO peserta (`nik`, `id_jurusan`, `nama`, `email`, `alamat`, `telepon`, `agama`, `tempat_lahir`, `tgl_lahir`, `jenis_kelamin`, `provinsi`, `kab/kota`, `pendidikan`, `nis`) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-
-    $stmt = $conn->prepare($sql);
-    $stmt->bind_param("sissssssssssss", $nik, $idjurusan, $nama, $email, $alamat, $no_telpon, $agama, $tempat_lahir, $tgl_lahir, $jenis_kelamin, $provinsi, $kab_kota, $pendidikan, $nis);
-
-    if ($stmt->execute()) {
-        setcookie('registration_success', 'true', time() + 300, '/');
-        header("Location: /daftar-pelatihan-kerja/login.php");
-        exit();
+        $stmt->close();
     } else {
-        echo "Error: " . $stmt->error;
+        echo "Error: " . $conn->error;
     }
-
-    $stmt->close();
 } else {
     echo "<script>alert('Method not allowed.');</script>";
 }

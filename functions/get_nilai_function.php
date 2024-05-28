@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'GET' && isset($_GET['id'])) {
         header('Content-Type: application/json');
         echo json_encode($response);
     } else {
-        echo "Data nilai tidak ditemukan untuk peserta dengan ID: $idPeserta";
+        echo "Data nilai tidak ditemukan";
     }
 } else {
     echo "Permintaan tidak valid.";

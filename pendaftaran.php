@@ -135,7 +135,7 @@
                                             </div>
                                         </div>
                                         <div class="row mb-3">
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-floating mb-3 mb-md-0">
                                                     <select class="form-select" id="pendidikan" name="pendidikan" required>
                                                         <option value="" disabled selected>Pendidikan</option>
@@ -147,65 +147,23 @@
                                                     <label for="pendidikan">Pendidikan</label>
                                                 </div>
                                             </div>
-                                            <div class="col-md-6">
+                                            <div class="col-md-12">
                                                 <div class="form-floating mb-3 mb-md-0">
-                                                    <select class="form-select" id="tingkat_pelatihan" name="tingkat_pelatihan" required>
-                                                        <option value="" disabled selected>Tingkat Pelatihan</option>
-                                                        <option value="01">Tingkat Latihan Dasar</option>
-                                                        <option value="02">Tingkat Latihan Menengah</option>
-                                                        <option value="03">Tingkat Latihan Mahir</option>
-                                                    </select>
-                                                    <label for="tingkat_pelatihan">Tingkat Pelatihan</label>
+                                                    <input type="hidden" name="nis" value="">
+                                                    <input type="hidden" name="kejuruan" value="">
+                                                    <input type="hidden" name="sifat" value="">
+                                                    <input type="hidden" name="tingkat_pelatihan" value="">
                                                 </div>
                                             </div>
                                         </div>
-                                        <div class="row mb-3">
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <select class="form-select" id="kejuruan" name="kejuruan" required>
-                                                        <option value="" disabled selected>Kejuruan</option>
-                                                        <option value="13">Mobil Bensin</option>
-                                                        <option value="04">Mekanik Logam/Las Listrik/Karbit</option>
-                                                        <option value="36">Bordir/Menjahit/Anyaman</option>
-                                                        <option value="25">Processing</option>
-                                                        <option value="54">Perikanan</option>
-                                                        <option value="16">Sepeda Motor</option>
-                                                        <option value="10">Electro/Listrik</option>
-                                                        <option value="35">Tata Niaga/Komputer/TU</option>
-                                                        <option value="26">Bangunan</option>
-                                                        <option value="50">Holtikultura</option>
-                                                    </select>
-                                                    <label for="kejuruan">Kejuruan</label>
-                                                </div>
-                                            </div>
-                                            <div class="col-md-6">
-                                                <div class="form-floating mb-3 mb-md-0">
-                                                    <select class="form-select" id="sifat" name="sifat" required>
-                                                        <option value="" disabled selected>Sifat</option>
-                                                        <option value="01">Institusional</option>
-                                                        <option value="02">Non Institusional</option>
-                                                        <option value="03">Pihak Ketiga (Privat, PSG, DD)</option>
-                                                    </select>
-                                                    <label for="sifat">Sifat</label>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-6">
-                                                <div class="form-floating">
-                                                    <input class="form-control" id="nis" name="nis" type="hidden" placeholder="NIS" />
-                                                </div>
-                                            </div>
-                                        </div>
-
                                         <div class="mt-4 mb-0">
                                             <div class="d-grid"><button class="btn btn-primary" type="submit">Daftar</button></div>
                                         </div>
                                     </form>
                                 </div>
-                                <!-- <div class="card-footer text-center py-3">
-                                    <div class="small"><a href="login.php">Have an account? Go to login</a></div>
-                                </div> -->
+                                <div class="card-footer text-center py-3">
+                                    <div class="small"><a href="login.php">Already have an account? Login here</a></div>
+                                </div>
                             </div>
                         </div>
                     </div>

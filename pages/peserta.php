@@ -11,7 +11,7 @@ if (isset($_SESSION['success_message'])) {
     unset($_SESSION['success_message']);
 }
 
-require_once ('./config/koneksi.php');
+require_once('./config/koneksi.php');
 $query = "SELECT * FROM peserta";
 
 $result = $conn->query($query);
@@ -45,51 +45,45 @@ $result = $conn->query($query);
 </style>
 
 <main>
-    <div class="modal modal-backdrop fade" id="confirmDeleteModal" tabindex="-1"
-        aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="confirmDeleteModal" tabindex="-1" aria-labelledby="confirmDeleteModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="confirmDeleteModalLabel">Konfirmasi Penghapusan</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        onclick="closeModal('confirmDeleteModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('confirmDeleteModal')"></button>
                 </div>
                 <div class="modal-body">
                     Apakah Anda yakin ingin menghapus peserta ini?
                 </div>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
-                        onclick="closeModal('confirmDeleteModal')">Tidak</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onclick="closeModal('confirmDeleteModal')">Tidak</button>
                     <button type="button" class="btn btn-danger" onclick="confirmDelete()">Delete</button>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal modal-backdrop fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel"
-        aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="editModal" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="editModalLabel">Edit Peserta</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
-                        onclick="closeModal('editModal')"></button>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModal('editModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
                         <input type="hidden" id="id_peserta" name="id_peserta" value="<?php echo $idPeserta; ?>">
+                        <input type="hidden" id="id_jurusan" name="id_jurusan" value="<?php echo $idJurusan; ?>">
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="nama" name="nama" type="text" placeholder="Nama"
-                                        required />
+                                    <input class="form-control" id="nama" name="nama" type="text" placeholder="Nama" required />
                                     <label for="nama">Nama</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input class="form-control" id="email" name="email" type="email"
-                                        placeholder="name@example.com" required />
+                                    <input class="form-control" id="email" name="email" type="email" placeholder="name@example.com" required />
                                     <label for="email">Email address</label>
                                 </div>
                             </div>
@@ -97,15 +91,13 @@ $result = $conn->query($query);
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="no_telpon" name="no_telpon" type="tel"
-                                        placeholder="Nomor Telepon" required />
+                                    <input class="form-control" id="no_telpon" name="no_telpon" type="tel" placeholder="Nomor Telepon" required />
                                     <label for="no_telpon">Nomor Telepon</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating">
-                                    <input class="form-control" id="alamat" name="alamat" type="text"
-                                        placeholder="Alamat" required />
+                                    <input class="form-control" id="alamat" name="alamat" type="text" placeholder="Alamat" required />
                                     <label for="alamat">Alamat</label>
                                 </div>
                             </div>
@@ -114,16 +106,15 @@ $result = $conn->query($query);
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <select class="form-select" id="jenis_kelamin" name="jenis_kelamin">
-                                        <option value="Laki-laki">Laki-laki</option>
-                                        <option value="Perempuan">Perempuan</option>
+                                        <option value="Laki-Laki" <?php echo ($jenis_kelamin === 'Laki-Laki') ? 'selected' : ''; ?>>Laki-laki</option>
+                                        <option value="Perempuan" <?php echo ($jenis_kelamin === 'Perempuan') ? 'selected' : ''; ?>>Perempuan</option>
                                     </select>
                                     <label for="jenis_kelamin">Jenis Kelamin</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="agama" name="agama" type="text" placeholder="Agama"
-                                        required />
+                                    <input class="form-control" id="agama" name="agama" type="text" placeholder="Agama" required />
                                     <label for="agama">Agama</label>
                                 </div>
                             </div>
@@ -131,32 +122,81 @@ $result = $conn->query($query);
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="tgl_lahir" name="tgl_lahir" type="date"
-                                        placeholder="Tanggal Lahir" required />
+                                    <input class="form-control" id="tgl_lahir" name="tgl_lahir" type="date" placeholder="Tanggal Lahir" required />
                                     <label for="tgl_lahir">Tanggal Lahir (mm/dd/yyyy)</label>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="tempat_lahir" name="tempat_lahir" type="text"
-                                        placeholder="Tempat Lahir" required />
+                                    <input class="form-control" id="tempat_lahir" name="tempat_lahir" type="text" placeholder="Tempat Lahir" required />
                                     <label for="tempat_lahir">Tempat Lahir</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-12 mb-4">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="nik" name="nik" type="text" placeholder="NIK" required />
+                                    <label for="nik">NIK</label>
+                                </div>
+                            </div>
+                            <hr>
+                        </div>
+                        <div claas="row-3 mb-3">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="nis" name="nis" type="text" placeholder="NIS" disabled required />
+                                    <label for="nis">NIS</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div claas="row-3 mb-3">
+                            <div class="col-md-12 mb-3">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <select class="form-select" id="kejuruan" name="kejuruan" required>
+                                        <option value="" disabled selected>Kejuruan</option>
+                                        <option value="13">Mobil Bensin</option>
+                                        <option value="04">Mekanik Logam/Las Listrik/Karbit</option>
+                                        <option value="36">Bordir/Menjahit/Anyaman</option>
+                                        <option value="25">Processing</option>
+                                        <option value="54">Perikanan</option>
+                                        <option value="16">Sepeda Motor</option>
+                                        <option value="10">Electro/Listrik</option>
+                                        <option value="35">Tata Niaga/Komputer/TU</option>
+                                        <option value="26">Bangunan</option>
+                                        <option value="50">Holtikultura</option>
+                                    </select>
+                                    <label for="kejuruan">Kejuruan</label>
                                 </div>
                             </div>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="nik" name="nik" type="text" placeholder="NIK"
-                                        required />
-                                    <label for="nik">NIK</label>
+                                    <select class="form-select" id="sifat" name="sifat" required>
+                                        <option value="" disabled selected>Sifat</option>
+                                        <option value="01">Institusional</option>
+                                        <option value="02">Non Institusional</option>
+                                        <option value="03">Pihak Ketiga (Privat, PSG, DD)</option>
+                                    </select>
+                                    <label for="sifat">Sifat</label>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <select class="form-select" id="tingkat_pelatihan" name="tingkat_pelatihan" required>
+                                        <option value="" disabled selected>Tingkat Pelatihan</option>
+                                        <option value="01">Tingkat Latihan Dasar</option>
+                                        <option value="02">Tingkat Latihan Menengah</option>
+                                        <option value="03">Tingkat Latihan Mahir</option>
+                                    </select>
+                                    <label for="tingkat_pelatihan">Tingkat Pelatihan</label>
                                 </div>
                             </div>
                         </div>
                         <div class="mt-4 mb-0">
                             <div class="text-end">
-                                <button type="button" class="btn btn-secondary"
-                                    onclick="closeModal('editModal')">Batal</button>
+                                <button type="button" class="btn btn-secondary" onclick="closeModal('editModal')">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
                             </div>
                         </div>
@@ -167,14 +207,12 @@ $result = $conn->query($query);
         </div>
     </div>
 
-    <div class="modal modal-backdrop fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel"
-        aria-hidden="true">
+    <div class="modal modal-backdrop fade" id="detailModal" tabindex="-1" aria-labelledby="detailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="detailModalLabel">Detail Peserta</h5>
-                    <button type="button" class="btn-close" aria-label="Close"
-                        onclick="closeModal('detailModal')"></button>
+                    <button type="button" class="btn-close" aria-label="Close" onclick="closeModal('detailModal')"></button>
                 </div>
                 <div class="modal-body">
                     <p><strong>Nama : </strong><br><span id="modal-nama"></span></p>
@@ -185,6 +223,7 @@ $result = $conn->query($query);
                     <p><strong>Jenis Kelamin : </strong><br><span id="modal-jenis-kelamin"></span></p>
                     <p><strong>Agama : </strong><br><span id="modal-agama"></span></p>
                     <p><strong>NIK : </strong><br><span id="modal-nik"></span></p>
+                    <p><strong>NIS : </strong><br><span id="modal-nis"></span></p>
                     <p><strong>Alamat : </strong><br><span id="modal-alamat"></span></p>
                 </div>
                 <div class="modal-footer"></div>
@@ -243,7 +282,7 @@ $result = $conn->query($query);
                         $i = 1;
                         if ($result->num_rows > 0) {
                             while ($row = $result->fetch_assoc()) {
-                                ?>
+                        ?>
                                 <tr>
                                     <td>
                                         <?php echo $i++; ?>.
@@ -271,22 +310,21 @@ $result = $conn->query($query);
                                                 <i class="fas fa-edit"></i> Edit
                                             </span>
                                         </a>
-                                        <a class="pointer me-2"
-                                            onclick="showModalDelete(<?php echo $row['id_peserta']; ?>, '<?php echo $row['nama']; ?>')">
+                                        <a class="pointer me-2" onclick="showModalDelete(<?php echo $row['id_peserta']; ?>, '<?php echo $row['nama']; ?>')">
                                             <span class="badge bg-danger p-2">
                                                 <i class="fas fa-trash-alt"></i> Delete
                                             </span>
                                         </a>
                                     </td>
                                 </tr>
-                                <?php
+                            <?php
                             }
                         } else {
                             ?>
                             <tr>
                                 <td colspan='5'>No data found</td>
                             </tr>
-                            <?php
+                        <?php
                         }
                         ?>
                     </tbody>
@@ -305,21 +343,23 @@ $result = $conn->query($query);
         const modalEnisKelamin = document.getElementById('modal-jenis-kelamin');
         const modalAgama = document.getElementById('modal-agama');
         const modalNik = document.getElementById('modal-nik');
+        const modalNis = document.getElementById('modal-nis');
         const modalAlamat = document.getElementById('modal-alamat');
 
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/detail_peserta_function.php?id=' + idPeserta, true);
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const data = JSON.parse(xhr.responseText);
                 modalNama.textContent = data.nama;
                 modalEmail.textContent = data.email;
-                modalNoTelpon.textContent = data.no_telpon;
+                modalNoTelpon.textContent = data.telepon;
                 modalTempatLahir.textContent = data.tempat_lahir;
                 modalTglLahir.textContent = data.tgl_lahir;
                 modalEnisKelamin.textContent = data.jenis_kelamin;
                 modalAgama.textContent = data.agama;
                 modalNik.textContent = data.nik;
+                modalNis.textContent = data.nis;
                 modalAlamat.textContent = data.alamat;
 
                 showModal('detailModal')
@@ -344,19 +384,25 @@ $result = $conn->query($query);
     function showEditModal(idPeserta) {
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/detail_peserta_function.php?id=' + idPeserta, true);
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
                 const data = JSON.parse(xhr.responseText);
+                console.log(data)
                 document.getElementById('id_peserta').value = data.id_peserta;
+                document.getElementById('id_jurusan').value = data.id_jurusan;
                 document.getElementById('nama').value = data.nama;
                 document.getElementById('email').value = data.email;
                 document.getElementById('alamat').value = data.alamat;
-                document.getElementById('no_telpon').value = data.no_telpon;
+                document.getElementById('no_telpon').value = data.telepon;
                 document.getElementById('tempat_lahir').value = data.tempat_lahir;
                 document.getElementById('tgl_lahir').value = data.tgl_lahir;
                 document.getElementById('jenis_kelamin').value = data.jenis_kelamin;
                 document.getElementById('agama').value = data.agama;
                 document.getElementById('nik').value = data.nik;
+                document.getElementById('nis').value = data.nis;
+                document.getElementById('kejuruan').value = data.kejuruan;
+                document.getElementById('sifat').value = data.sifat;
+                document.getElementById('tingkat_pelatihan').value = data.tingkat_pelatihan;
 
                 showModal('editModal');
             }
@@ -364,15 +410,13 @@ $result = $conn->query($query);
         xhr.send();
     }
 
-    document.getElementById('editForm').addEventListener('submit', function (event) {
+    document.getElementById('editForm').addEventListener('submit', function(event) {
         event.preventDefault();
         const formData = new FormData(this);
-        console.log(formData)
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './functions/update_peserta_function.php', true);
-        xhr.onreadystatechange = function () {
+        xhr.onreadystatechange = function() {
             if (xhr.readyState == 4 && xhr.status == 200) {
-                alert(xhr.responseText);
                 const modal = document.getElementById('editModal');
                 modal.classList.remove('show');
                 document.body.classList.remove('modal-open');
@@ -385,17 +429,17 @@ $result = $conn->query($query);
     function showModal(idModal) {
         document.getElementById(idModal).classList.add("fade");
         document.getElementById(idModal).style.display = "block";
-        setTimeout(function () {
+        setTimeout(function() {
             document.getElementById(idModal).classList.add("show");
             document.body.classList.add("modal-open");
         }, 100);
     }
 
-    document.addEventListener('DOMContentLoaded', function () {
+    document.addEventListener('DOMContentLoaded', function() {
         const modalBackdrops = document.querySelectorAll('.modal-backdrop');
 
-        modalBackdrops.forEach(function (modalBackdrop) {
-            modalBackdrop.addEventListener('click', function (event) {
+        modalBackdrops.forEach(function(modalBackdrop) {
+            modalBackdrop.addEventListener('click', function(event) {
                 if (event.target === modalBackdrop) {
                     const modal = modalBackdrop.closest('.modal')
                     const modalId = modal.getAttribute('id');
