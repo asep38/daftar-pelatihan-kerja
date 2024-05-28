@@ -4,7 +4,9 @@ require './config/koneksi.php';
 // require "R.php";
 // $id_alternative = $_GET['id'];
 
-$query = "SELECT * FROM `peserta`";
+$query = "SELECT peserta.id_peserta, peserta.nama, peserta.nis, peserta.nik, peserta.email, peserta.telepon, peserta.alamat, peserta.provinsi, peserta.`kab/kota`, peserta.agama, peserta.tempat_lahir, peserta.tgl_lahir, peserta.jenis_kelamin, peserta.pendidikan, jurusan.nama_jurusan
+FROM peserta
+JOIN jurusan ON peserta.id_jurusan = jurusan.id_jurusan;";
 $result = $conn->query($query);
 // if ($hasil) {
 //     // Tampilkan data sesuai dengan id_alternative
@@ -120,7 +122,7 @@ $result = $conn->query($query);
                                     <?php echo $row["nik"]; ?>
                                 </td>
                                 <td>
-                                    <?php echo $row["id_jurusan"]; ?>
+                                    <?php echo $row["nama_jurusan"]; ?>
                                 </td>
                                 <td>
                                     <?php echo $row["email"]; ?>
