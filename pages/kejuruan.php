@@ -1,12 +1,12 @@
 <?php
-// error_reporting(E_ALL);
-// ini_set('display_errors', 1);
+error_reporting(E_ALL);
+ini_set('display_errors', 1);
 
 if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
-if (isset ($_SESSION['success_message'])) {
+if (isset($_SESSION['success_message'])) {
     echo "<script>alert('" . $_SESSION['success_message'] . "');</script>";
     unset($_SESSION['success_message']);
 }
@@ -55,7 +55,7 @@ $result = $conn->query($query);
                         onclick="closeModal('confirmDeleteModal')"></button>
                 </div>
                 <div class="modal-body">
-                    Apakah Anda yakin ingin menghapus peserta ini?
+                    Apakah Anda yakin ingin menghapus jurusan ini?
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal"
@@ -71,15 +71,15 @@ $result = $conn->query($query);
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Peserta</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit Jurusan</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         onclick="closeModal('editModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <input type="hidden" id="id_jurusan" name="id_jurusan" value="<?php echo $idJurusan; ?>">
+                        <input type="hidden" id="id_jurusan" name="id_jurusan" value="<?= $idJurusan; ?>">
                         <div class="row mb-3">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input class="form-control" id="jurusan" name="jurusan" type="text"
                                         placeholder="jurusan" required />
@@ -88,8 +88,8 @@ $result = $conn->query($query);
                             </div>
                         </div>
 
-                        <div class="mt-4 mb-0">
-                            <div class="text-end">
+                        <div class="mt-4 mb-3">
+                            <div class="col-md-12">
                                 <button type="button" class="btn btn-secondary"
                                     onclick="closeModal('editModal')">Batal</button>
                                 <button type="submit" class="btn btn-primary">Simpan</button>
@@ -102,7 +102,40 @@ $result = $conn->query($query);
         </div>
     </div>
 
+    <div class="modal modal-backdrop fade" id="jurusanModal" tabindex="-1" aria-labelledby="jurusanModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="jurusanModalLabel">Detail Peserta</h5>
+                    <button type="button" class="btn-close" aria-label="Close"
+                        onclick="closeModal('jurusanModal')"></button>
+                </div>
+                <div class="modal-body">
+                    <form action="./functions/create_jurusan_function.php" method="POST">
+                        <div class="row mb-3">
+                            <div class="col-md-12">
+                                <div class="form-floating mb-3 mb-md-0">
+                                    <input class="form-control" id="jurusan" name="jurusan" type="text"
+                                        placeholder="jurusan" required />
+                                    <label for="jurusan">Nama jurusan</label>
+                                </div>
+                            </div>
+                        </div>
 
+                        <div class="mt-4 mb-3">
+                            <div class="col-md-12">
+                                <button type="button" class="btn btn-secondary"
+                                    onclick="closeModal('jurusanModal')">Batal</button>
+                                <button type="submit" class="btn btn-primary">Simpan</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer"></div>
+            </div>
+        </div>
+    </div>
 
     <div class="container-fluid px-4">
         <h1 class="mt-4">Daftar Jurusan</h1>
@@ -116,6 +149,11 @@ $result = $conn->query($query);
                 delectus magnam soluta natus veniam aliquam id sequi modi aspernatur libero officiis illo eveniet,
                 quidem a.
             </div>
+        </div>
+        <div class="mb-4">
+            <button type="button" class="btn btn-success" onclick="showModal('jurusanModal')">
+                Tambah Jurusan
+            </button>
         </div>
         <div class="card mb-4">
             <div class="card-header">
@@ -192,18 +230,28 @@ $result = $conn->query($query);
     }
 
     function confirmDelete() {
-        window.location.href = "./functions/delete_peserta_function.php?id=" + deleteId;
+        window.location.href = "./functions/delete_jurusan_function.php?id=" + deleteId;
     }
 
     function showEditModal(idJurusan) {
+        console.log("showEditModal called with idJurusan:", idJurusan); // Log ID yang diterima
         const xhr = new XMLHttpRequest();
         xhr.open('GET', './functions/update_jurusan_function.php?id=' + idJurusan, true);
         xhr.onreadystatechange = function () {
+            console.log("readyState:", xhr.readyState, "status:", xhr.status); // Log status dari XHR
             if (xhr.readyState == 4 && xhr.status == 200) {
-                const data = JSON.parse(xhr.responseText);
-                document.getElementById('id_jurusan').value = data.id_jurusan;
-                document.getElementById('jurusan').value = data.nama_jurusan;
-                showModal('editModal');
+                try {
+                    const data = JSON.parse(xhr.responseText);
+                    console.log("data:", data); // Log data yang diterima dari server
+                    document.getElementById('id_jurusan').value = data.id_jurusan;
+                    document.getElementById('jurusan').value = data.nama_jurusan;
+                    showModal('editModal');
+                } catch (e) {
+                    console.error('Error parsing JSON:', e);
+                    console.error('Response:', xhr.responseText); // Log respons jika ada kesalahan
+                }
+            } else if (xhr.readyState == 4) {
+                console.error('Error with request:', xhr.status, xhr.statusText); // Log error jika status bukan 200
             }
         };
         xhr.send();
@@ -212,15 +260,13 @@ $result = $conn->query($query);
     document.getElementById('editForm').addEventListener('submit', function (event) {
         event.preventDefault();
         const formData = new FormData(this);
-        console.log(formData)
         const xhr = new XMLHttpRequest();
         xhr.open('POST', './functions/update_jurusan_function.php', true);
         xhr.onreadystatechange = function () {
+            console.log("readyState:", xhr.readyState, "status:", xhr.status); // Log status dari XHR
             if (xhr.readyState == 4 && xhr.status == 200) {
                 alert(xhr.responseText);
-                const modal = document.getElementById('editModal');
-                modal.classList.remove('show');
-                document.body.classList.remove('modal-open');
+                closeModal('editModal');
                 window.location.reload();
             }
         };
