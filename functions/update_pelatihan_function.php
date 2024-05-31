@@ -2,7 +2,7 @@
 // error_reporting(E_ALL);
 // ini_set('display_errors', 1);
 
-require_once('../config/koneksi.php');
+require_once ('../config/koneksi.php');
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $idPelatihan = $_POST['id_pelatihan'];
@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $tanggal_selesai = $_POST['tanggal_selesai'];
     $tempat = $_POST['tempat'];
 
-    $query = "UPDATE pelatihan SET nama=?, deskripsi=?, tanggal_mulai=?, tanggal_selesai=?, tempat=? WHERE id_pelatihan=?";
+    $query = "UPDATE pelatihan SET id_jurusan=?, deskripsi=?, tanggal_mulai=?, tanggal_selesai=?, tempat=? WHERE id_pelatihan=?";
     $stmt = $conn->prepare($query);
     $stmt->bind_param("sssssi", $nama, $deskripsi, $tanggal_mulai, $tanggal_selesai, $tempat, $idPelatihan);
 

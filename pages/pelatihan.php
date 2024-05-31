@@ -79,10 +79,30 @@ $result = $conn->query($query);
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <input type="hidden" id="id_pelatihan" name="id_pelatihan" value="<?php echo $idPelatihan; ?>">
+                        <input type="hidden" id="id_pelatihan" name="id_pelatihan" value="<?= $idPelatihan; ?>">
                         <div class="mb-3">
                             <label for="nama" class="form-label">Nama Pelatihan</label>
-                            <input type="text" class="form-control" id="nama" name="nama" required>
+                            <select class="form-select" id="nama" name="nama">
+                                <?php
+                                require_once ('./config/koneksi.php');
+                                $i = 1;
+                                $ambilsemuadata = mysqli_query($conn, "SELECT * FROM jurusan");
+                                while ($fetcharray = mysqli_fetch_array($ambilsemuadata)) {
+                                    $namajurusan = $fetcharray['nama_jurusan'];
+                                    $idjurusan = $fetcharray['id_jurusan'];
+
+                                    ?>
+
+                                    <option value="<?= $idjurusan; ?>">
+                                        <?= $i++; ?>
+                                        <?= $namajurusan; ?>
+                                    </option>
+
+                                    <?php
+                                }
+                                ?>
+
+                            </select>
                         </div>
                         <div class="mb-3">
                             <label for="deskripsi" class="form-label">Deskripsi</label>
