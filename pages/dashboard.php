@@ -33,7 +33,7 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                         <div class="card bg-primary text-white mb-4">
                             <div class="card-body">Jumlah Jurusan</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <? echo $jumlah_jurusan; ?>
+                                <?php echo $jumlah_jurusan; ?>
                             </div>
                         </div>
                     </div>
@@ -41,7 +41,7 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                         <div class="card bg-warning text-white mb-4">
                             <div class="card-body">Jumlah Peserta</div>
                             <div class="card-footer d-flex align-items-center justify-content-between">
-                                <? echo $jumlah_peserta; ?>
+                                <?php echo $jumlah_peserta; ?>
                             </div>
                         </div>
                     </div>
