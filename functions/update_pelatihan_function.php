@@ -10,11 +10,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deskripsi = $_POST['deskripsi'];
     $tanggal_mulai = $_POST['tanggal_mulai'];
     $tanggal_selesai = $_POST['tanggal_selesai'];
+    $instruktur = $_POST['nama_instruktur'];
     $tempat = $_POST['tempat'];
 
-    $query = "UPDATE pelatihan SET id_jurusan=?, deskripsi=?, tanggal_mulai=?, tanggal_selesai=?, tempat=? WHERE id_pelatihan=?";
+    $query = "UPDATE pelatihan SET id_jurusan=?, id_instruktur=?, deskripsi=?, tanggal_mulai=?, tanggal_selesai=?, tempat=? WHERE id_pelatihan=?";
     $stmt = $conn->prepare($query);
-    $stmt->bind_param("sssssi", $nama, $deskripsi, $tanggal_mulai, $tanggal_selesai, $tempat, $idPelatihan);
+    $stmt->bind_param("sssssi", $nama, $instruktur, $deskripsi, $tanggal_mulai, $tanggal_selesai, $tempat, $idPelatihan);
 
     if ($stmt->execute()) {
         echo "Data Pelatihan Berhasil Diperbarui";

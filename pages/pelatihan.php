@@ -11,9 +11,12 @@ if (isset($_SESSION['success_message'])) {
 }
 
 require_once ('./config/koneksi.php');
-$query = "SELECT p.id_pelatihan, p.deskripsi, p.tanggal_mulai, p.tanggal_selesai, p.tempat, j.nama_jurusan 
-          FROM pelatihan p 
-          INNER JOIN jurusan j ON p.id_jurusan = j.id_jurusan";
+$query = "SELECT p.id_pelatihan, p.deskripsi, p.tanggal_mulai, p.tanggal_selesai, p.tempat, 
+       j.nama_jurusan, i.nama AS nama
+FROM pelatihan p
+INNER JOIN jurusan j ON p.id_jurusan = j.id_jurusan
+INNER JOIN instruktur i ON p.id_instruktur = i.id_instruktur
+";
 
 $result = $conn->query($query);
 ?>
@@ -121,6 +124,30 @@ $result = $conn->query($query);
                             <label for="tempat" class="form-label">Tempat</label>
                             <input type="text" class="form-control" id="tempat" name="tempat" required>
                         </div>
+                        <div class="mb-3">
+                            <label for="nama_instruktur" class="form-label">Nama Instruktur</label>
+                            <select class="form-select" id="nama_instruktur" name="nama_instruktur">
+                                <?php
+                                require_once ('./config/koneksi.php');
+                                $i = 1;
+                                $ambilsemuadata = mysqli_query($conn, "SELECT * FROM instruktur");
+                                while ($fetcharray = mysqli_fetch_array($ambilsemuadata)) {
+                                    $namainstruktur = $fetcharray['nama'];
+                                    $idinstruktur = $fetcharray['id_instruktur'];
+
+                                    ?>
+
+                                    <option value="<?= $idinstruktur; ?>">
+                                        <?= $i++; ?>
+                                        <?= $namainstruktur; ?>
+                                    </option>
+
+                                    <?php
+                                }
+                                ?>
+
+                            </select>
+                        </div>
                         <div class="mt-4 mb-0">
                             <div class="text-end">
                                 <button type="button" class="btn btn-secondary"
@@ -205,6 +232,30 @@ $result = $conn->query($query);
                                 required>
                         </div>
                         <div class="mb-3">
+                            <label for="nama_instruktur" class="form-label">Nama Instruktur</label>
+                            <select class="form-select" id="nama_instruktur" name="nama_instruktur">
+                                <?php
+                                require_once ('./config/koneksi.php');
+                                $i = 1;
+                                $ambilsemuadata = mysqli_query($conn, "SELECT * FROM instruktur");
+                                while ($fetcharray = mysqli_fetch_array($ambilsemuadata)) {
+                                    $namainstruktur = $fetcharray['nama'];
+                                    $idinstruktur = $fetcharray['id_instruktur'];
+
+                                    ?>
+
+                                    <option value="<?= $idinstruktur; ?>">
+                                        <?= $i++; ?>
+                                        <?= $namainstruktur; ?>
+                                    </option>
+
+                                    <?php
+                                }
+                                ?>
+
+                            </select>
+                        </div>
+                        <div class="mb-3">
                             <label for="tempat" class="form-label">Tempat</label>
                             <input type="text" class="form-control" id="tempat" name="tempat" required>
                         </div>
@@ -252,18 +303,11 @@ $result = $conn->query($query);
                                 <th>Nama Pelatihan</th>
                                 <th>Tanggal Mulai</th>
                                 <th>Tanggal Selesai</th>
+                                <th>Instruktur</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama Pelatihan</th>
-                                <th>Tanggal Mulai</th>
-                                <th>Tanggal Selesai</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
+
                     <?php } ?>
                     <tbody>
                         <?php
@@ -287,6 +331,9 @@ $result = $conn->query($query);
                                     </td>
                                     <td>
                                         <?php echo $row["tanggal_selesai"]; ?>
+                                    </td>
+                                    <td>
+                                        <?php echo $row["nama"]; ?>
                                     </td>
                                     <td>
                                         <a class="pointer me-2" onclick="showDetail(<?php echo $row['id_pelatihan']; ?>)">

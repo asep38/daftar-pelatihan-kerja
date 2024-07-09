@@ -59,6 +59,10 @@ $jumlah_jurusan = mysqli_num_rows($result_jurusan);
                     require "pages/cetak-peserta.php";
                 } elseif ($page == 'rekapnilai') {
                     require "pages/rekap-nilai.php";
+                } elseif ($page == 'sertifikat') {
+                    require "pages/cetak-sertifikat.php";
+                } elseif ($page == 'instruktur') {
+                    require "pages/instruktur.php";
                 } elseif ($page == 'dashboard') {
                     require "pages/dashboard.php";
                 } else {

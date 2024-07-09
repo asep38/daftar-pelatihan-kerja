@@ -12,7 +12,7 @@ if (isset($_SESSION['success_message'])) {
 }
 
 require_once ('./config/koneksi.php');
-$query = "SELECT * FROM peserta";
+$query = "SELECT * FROM instruktur";
 
 $result = $conn->query($query);
 ?>
@@ -71,13 +71,13 @@ $result = $conn->query($query);
         <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="editModalLabel">Edit Peserta</h5>
+                    <h5 class="modal-title" id="editModalLabel">Edit instruktur</h5>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"
                         onclick="closeModal('editModal')"></button>
                 </div>
                 <div class="modal-body">
                     <form id="editForm">
-                        <input type="hidden" id="id_peserta" name="id_peserta" value="<?php echo $idPeserta; ?>">
+                        <input type="hidden" id="id_instruktur" name="id_instruktur" value="<?php echo $idPeserta; ?>">
                         <input type="hidden" id="id_jurusan" name="id_jurusan" value="<?php echo $idJurusan; ?>">
                         <div class="row mb-3">
                             <div class="col-md-6">
@@ -145,70 +145,18 @@ $result = $conn->query($query);
                                 </div>
                             </div>
                         </div>
-                        <div class="row mb-3">
-                            <div class="col-md-12 mb-4">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <input class="form-control" id="nik" name="nik" type="text" placeholder="NIK"
-                                        required />
-                                    <label for="nik">NIK</label>
-                                </div>
-                            </div>
-                            <hr>
-                        </div>
+
                         <div claas="row-3 mb-3">
                             <div class="col-md-12 mb-3">
                                 <div class="form-floating mb-3 mb-md-0">
                                     <input class="form-control" id="nis" name="nis" type="text" placeholder="NIS"
                                         disabled required />
-                                    <label for="nis">NIS</label>
+                                    <label for="nip">NIP</label>
                                 </div>
                             </div>
                         </div>
-                        <div claas="row-3 mb-3">
-                            <div class="col-md-12 mb-3">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <select class="form-select" id="kejuruan" name="kejuruan" required>
-                                        <option value="" disabled selected>Kejuruan</option>
-                                        <option value="13">Mobil Bensin</option>
-                                        <option value="04">Mekanik Logam/Las Listrik/Karbit</option>
-                                        <option value="36">Bordir/Menjahit/Anyaman</option>
-                                        <option value="25">Processing</option>
-                                        <option value="54">Perikanan</option>
-                                        <option value="16">Sepeda Motor</option>
-                                        <option value="10">Electro/Listrik</option>
-                                        <option value="35">Tata Niaga/Komputer/TU</option>
-                                        <option value="26">Bangunan</option>
-                                        <option value="50">Holtikultura</option>
-                                    </select>
-                                    <label for="kejuruan">Kejuruan</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="row mb-3">
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <select class="form-select" id="sifat" name="sifat" required>
-                                        <option value="" disabled selected>Sifat</option>
-                                        <option value="01">Institusional</option>
-                                        <option value="02">Non Institusional</option>
-                                        <option value="03">Pihak Ketiga (Privat, PSG, DD)</option>
-                                    </select>
-                                    <label for="sifat">Sifat</label>
-                                </div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="form-floating mb-3 mb-md-0">
-                                    <select class="form-select" id="tingkat_pelatihan" name="tingkat_pelatihan"
-                                        required>
-                                        <option value="" disabled selected>Tingkat Pelatihan</option>
-                                        <option value="01">Tingkat Latihan Dasar</option>
-                                        <option value="02">Tingkat Latihan Menengah</option>
-                                        <option value="03">Tingkat Latihan Mahir</option>
-                                    </select>
-                                    <label for="tingkat_pelatihan">Tingkat Pelatihan</label>
-                                </div>
-                            </div>
-                        </div>
+
+
                         <div class="mt-4 mb-0">
                             <div class="text-end">
                                 <button type="button" class="btn btn-secondary"
@@ -250,7 +198,7 @@ $result = $conn->query($query);
     </div>
 
     <div class="container-fluid px-4">
-        <h1 class="mt-4">Daftar Peserta</h1>
+        <h1 class="mt-4">Daftar Instruktur</h1>
         <ol class="breadcrumb mb-4">
             <li class="breadcrumb-item"><a href="#">Dashboard</a></li>
             <li class="breadcrumb-item active">Tables</li>
@@ -264,12 +212,12 @@ $result = $conn->query($query);
             </div>
         </div>
         <a class="btn btn-success mb-4" href="?page=cetakpeserta">
-            Cetak Peserta
+            Cetak instruktur
         </a>
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>
-                Data Table Peserta
+                Data Table instruktur
             </div>
             <div class="card-body">
                 <table id="datatablesSimple">
@@ -277,23 +225,15 @@ $result = $conn->query($query);
                         <thead>
                             <tr>
                                 <th>No</th>
+                                <th>NIP</th>
                                 <th>Nama</th>
-                                <th>NIS</th>
-                                <th>Email</th>
-                                <th>No Telpon</th>
+                                <th>Jabatan</th>
+                                <th>Pangkat</th>
+                                <th>Mengajar</th>
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        <tfoot>
-                            <tr>
-                                <th>No</th>
-                                <th>Nama</th>
-                                <th>NIS</th>
-                                <th>Email</th>
-                                <th>No Telpon</th>
-                                <th>Action</th>
-                            </tr>
-                        </tfoot>
+
                     <?php } ?>
                     <tbody>
                         <?php
@@ -306,38 +246,31 @@ $result = $conn->query($query);
                                         <?php echo $i++; ?>.
                                     </td>
                                     <td>
+                                        <?php echo $row["nip"]; ?>
+                                    </td>
+                                    <td>
                                         <?php echo $row["nama"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["nis"]; ?>
+                                        <?php echo $row["jabatan"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["email"]; ?>
+                                        <?php echo $row["pangkat"]; ?>
                                     </td>
                                     <td>
-                                        <?php echo $row["telepon"]; ?>
+                                        <?php echo $row["mengajar"]; ?>
                                     </td>
                                     <td>
-                                        <a class="pointer me-2" onclick="showDetail(<?php echo $row['id_peserta']; ?>)">
-                                            <span class="badge bg-primary p-2">
-                                                <i class="fas fa-info-circle"></i> Detail
-                                            </span>
-                                        </a>
-                                        <a class="pointer me-2" onclick="showEditModal(<?php echo $row['id_peserta']; ?>)">
+
+                                        <a class="pointer me-2" onclick="showEditModal(<?php echo $row['id_instruktur']; ?>)">
                                             <span class="badge bg-warning p-2">
                                                 <i class="fas fa-edit"></i> Edit
                                             </span>
                                         </a>
                                         <a class="pointer me-2"
-                                            onclick="showModalDelete(<?php echo $row['id_peserta']; ?>, '<?php echo $row['nama']; ?>')">
+                                            onclick="showModalDelete(<?php echo $row['id_instruktur']; ?>, '<?php echo $row['nama']; ?>')">
                                             <span class="badge bg-danger p-2">
                                                 <i class="fas fa-trash-alt"></i> Delete
-                                            </span>
-                                        </a>
-                                        <a class="pointer me-2"
-                                            href="?page=sertifikat&id_peserta=<?php echo $row['id_peserta']; ?>">
-                                            <span class="badge bg-primary p-2">
-                                                <i class="fas fa-info-circle"></i> Sertifikat
                                             </span>
                                         </a>
                                     </td>

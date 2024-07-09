@@ -19,6 +19,10 @@
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group"></i></div>
                         Peserta
                     </a>
+                    <a class="nav-link" href="?page=instruktur">
+                        <div class="sb-nav-link-icon"><i class="fa-solid fa-people-group"></i></div>
+                        Instruktur
+                    </a>
                     <a class="nav-link" href="?page=pelatihan">
                         <div class="sb-nav-link-icon"><i class="fa-solid fa-book"></i></div>
                         Pelatihan

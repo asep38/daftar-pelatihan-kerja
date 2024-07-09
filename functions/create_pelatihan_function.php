@@ -9,10 +9,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $deskripsi = $_POST['deskripsi'];
     $tanggal_mulai = $_POST['tanggal_mulai'];
     $tanggal_selesai = $_POST['tanggal_selesai'];
+    $instruktur = $_POST['nama_instruktur'];
     $tempat = $_POST['tempat'];
 
-    $query = "INSERT INTO pelatihan (`id_jurusan`, `deskripsi`, `tanggal_mulai`, `tanggal_selesai`, `tempat`) VALUES 
-    ('$idjurusan', '$deskripsi', '$tanggal_mulai', '$tanggal_selesai', '$tempat')";
+    $query = "INSERT INTO pelatihan (`id_jurusan`,`id_instruktur`, `deskripsi`, `tanggal_mulai`, `tanggal_selesai`, `tempat`) VALUES 
+    ('$idjurusan','$instruktur', '$deskripsi', '$tanggal_mulai', '$tanggal_selesai', '$tempat')";
 
     if ($conn->query($query) === TRUE) {
         echo "<script>alert('Data pelatihan berhasil ditambahkan');</script>";
